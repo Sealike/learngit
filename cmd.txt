@@ -1,11 +1,80 @@
-
-
-
-
+git 关键指令及相关说明汇总
++++++++++++++++++++++++++++
+- 创建版本库
+- git init
++++++++++++++++++++++++++++
+- 添加文件到暂存区
+- git add file
++++++++++++++++++++++++++++
+- 提交暂存区内容到版本库
+- git commit -m "message"
++++++++++++++++++++++++++++
+- 查看当前版本库状态
+- git status
++++++++++++++++++++++++++++
+- 查看最近到最远的提交日志: 简化参数 --pretty=oneline
+- git log
++++++++++++++++++++++++++++
+- 版本回退
+- git reset --hard <commit id>
+- 各个版本的表示
+- HEAD:当前版本
+- HEAD^:上一个版本
+- HEAD^^:上上个版本
+- HEAD~100:往上100个版本
++++++++++++++++++++++++++++
+- 查看版本切换历史
+- git reflog
++++++++++++++++++++++++++++
+- 查看区别
+- git diff:查看工作区和最新版本库的区别
+- git diff HEAD -- file
++++++++++++++++++++++++++++
 - 丢弃工作区的修改: 恢复到最近一次commit或者add时的状态
 - git checkout -- file
-
++++++++++++++++++++++++++++
 - 撤销暂存区的修改: 已经提交到了暂存区修改,即在暂存区中清空该文件的修改
 - git reset HEAD file
 - git reset 命令既可以回退版本，也可以把暂存区的修改回退到工作区。
 	当我们用HEAD时，表示最新的版本
++++++++++++++++++++++++++++
+- 删除
+- git rm file
+- ?
++++++++++++++++++++++++++++
+- 远程仓库使用准备
+- 1. 创建SSH Key: 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
+ssh-keygen -t rsa -C "youremail@example.com"
+你需要把邮件地址换成你自己的邮件地址(注意，此处的邮箱必须是注册远程仓库时用的邮箱)，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。
+如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+- 2. 添加SSH Key:登录GitHub->Account settings->SSH Keys->Add SSH Key,填入title,在key文本中粘贴id_rsa.pub文本的内容
+- 3. 判断是否连接到GitHub: ssh -T git@github.com
++++++++++++++++++++++++++++
+- 绑定远程仓库
+- git remote add origin git@github.com:username/yyy.git
+- 请千万注意，把上面的username替换成你自己的GitHub账户名，否则，你在本地关联的就是我的远程库，关联没有问题，但是你以后推送是推不上去的，因为你的SSH Key公钥不在我的账户列表中。
+添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。
++++++++++++++++++++++++++++
+- 向远程仓库推送
+- git push -u origin master
+- 把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。从现在起，只要本地作了提交，就可以通过命令：
+git push origin master把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库！
+- SSH警告
+当你第一次使用Git的clone或者push命令连接GitHub时，会得到一个警告：
+The authenticity of host 'github.com (xx.xx.xx.xx)' can't be established.
+RSA key fingerprint is xx.xx.xx.xx.xx.
+Are you sure you want to continue connecting (yes/no)?
+这是因为Git使用SSH连接，而SSH连接在第一次验证GitHub服务器的Key时，需要你确认GitHub的Key的指纹信息是否真的来自GitHub的服务器，输入yes回车即可。
+Git会输出一个警告，告诉你已经把GitHub的Key添加到本机的一个信任列表里了：
+Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
+这个警告只会出现一次，后面的操作就不会有任何警告了。
+如果你实在担心有人冒充GitHub服务器，输入yes前可以对照GitHub的RSA Key的指纹信息是否与SSH连接给出的一致。
++++++++++++++++++++++++++++
+- 从远程克隆
+- git clone git@github.com:username/xxx.git
+
+
+
+
+
