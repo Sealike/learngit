@@ -88,5 +88,19 @@ Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
 - 删除分支
 - git branch -d dev
 +++++++++++++++++++++++++++
-
+- 分支策略
+- 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了
++++++++++++++++++++++++++++
+- 缓存现场
+- git stash
++++++++++++++++++++++++++++
+- 查看缓存队列
+- git stash list
++++++++++++++++++++++++++++
+- 恢复缓存
+- git stash pop: 恢复最近一次缓存，并将该次缓存清空
+- git stash apply stash@{0}：恢复指定缓存，并保留该缓存
+- git stash drop stash@{0}：删除指定缓存 
 
