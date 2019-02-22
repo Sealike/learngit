@@ -87,6 +87,7 @@ Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
 +++++++++++++++++++++++++++
 - 删除分支
 - git branch -d dev
+- git branch -D dev : 强制删除该分支,不管有没有未合并的内容
 +++++++++++++++++++++++++++
 - 分支策略
 - 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
@@ -103,4 +104,11 @@ Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
 - git stash pop: 恢复最近一次缓存，并将该次缓存清空
 - git stash apply stash@{0}：恢复指定缓存，并保留该缓存
 - git stash drop stash@{0}：删除指定缓存 
-
++++++++++++++++++++++++++++
+- 查看远程仓库
+- git remote
+- git remote -v : 查看详细信息。如果没有推送权限，就看不到push的地址
++++++++++++++++++++++++++++
+- 推送分支
+- git push origin master : 将本地master分支所有本地提交推送到origin
++++++++++++++++++++++++++++
